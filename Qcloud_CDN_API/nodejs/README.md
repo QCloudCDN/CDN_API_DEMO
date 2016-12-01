@@ -69,8 +69,8 @@ qcloudSDK.request('Action的名字', action对应的参数对象, callback)
 const qcloudSDK = require('qcloud-cdn-node-sdk');
 
 qcloudSDK.config({
-    secretId: 'AKIDT8G5AsY1D3MChWooNq1rFSw1fyBVCX9D',
-    secretKey: 'pxPgRWDbCy86ZYyqBTDk7WmeRZSmPco0'
+    secretId: 'AAAAAAAAAAAAAAAAA',
+    secretKey: 'BBBBBBBBBBBBBBBBBB'
 })
 
 qcloudSDK.request('DescribeCdnHostInfo', {
