@@ -1,4 +1,4 @@
-## python demo 工具使用方法
+﻿## python demo 工具使用方法
 其中 -u参数表示 SECRET_ID -p 参数表示SECRET_KEY,可从https://console.qcloud.com/capi 获取，其余参数参考https://www.qcloud.com/doc/api/231/API%E6%A6%82%E8%A7%88
 
 ## DescribleCdnHosts

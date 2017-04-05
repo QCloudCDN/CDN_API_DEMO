@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "nodejs",
   "version": "1.0.0",
   "description": "",
@@ -9,4 +10,31 @@
   "keywords": [],
   "author": "",
   "license": "ISC"
+=======
+  "name": "qcloud-cdn-node-sdk",
+  "version": "1.0.0",
+  "description": "腾讯云CDN OpenAPI Node.js SDK",
+  "main": "index.js",
+  "dependencies": {
+    "lodash": "^4.17.2",
+    "request": "^2.79.0",
+    "utility": "^1.9.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  },
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QCloudCDN/CDN_API_SDK/tree/master/Qcloud_CDN_API/nodejs"
+  },
+  "keywords": [
+    "qcloud",
+    "nodejs",
+    "sdk"
+  ],
+  "author": "QcloudCDN",
+  "license": "MIT"
+>>>>>>> 35ab9beb20e69594d7044a9a4dddf5a99d09ff68
 }
