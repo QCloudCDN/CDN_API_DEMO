@@ -41,20 +41,20 @@ python QcloudCdnTools_V2.py OnlineHost -u xxxxx -p xxxxxxx  --hostId 206092
 ## DeleteCdnHost
 python QcloudCdnTools_V2.py DeleteCdnHost -u xxxxx -p xxxxxxx  --hostId 81094
 
-##GenerateLogList
+## GenerateLogList
 python QcloudCdnTools_V2.py GenerateLogList -u xxxxx -p xxxxxxx  --hostId 206092
 
-##GetCdnRefreshLog
+## GetCdnRefreshLog
 python QcloudCdnTools_V2.py GetCdnRefreshLog -u xxxxxxxxxxxx -p xxxxxxxxxxxx  --startDate 2016-04-25 --endDate 2016-04-26
 
-##GetCdnStatTop
+## GetCdnStatTop
 python QcloudCdnTools_V2.py GetCdnStatTop -u xxxxxxxxxxxx -p xxxxxxxxxxxx  --startDate 2016-05-08 --endDate 2016-05-09 --statType bandwidth --projects 0 --hosts ping.cdn.qcloud.com --hosts ts6.cache.qcloudcdn.com
 
-##GetCdnStatusCode
+## GetCdnStatusCode
 python QcloudCdnTools_V2.py GetCdnStatusCode -u xxxxxxxxxxxx -p xxxxxxxxxxxx  --startDate 2016-05-08 --endDate 2016-05-09 --projects 0 --hosts ping.cdn.qcloud.com --hosts ts6.cache.qcloudcdn.com
 
-##DescribeCdnHostDetailedInfo
+## DescribeCdnHostDetailedInfo
 python QcloudCdnTools_V2.py DescribeCdnHostDetailedInfo -u xxxxxxxxxxxx -p xxxxxxxxxxxx  --startDate 2016-05-08 --endDate 2016-05-09 --projects 0 --hosts ping.cdn.qcloud.com --hosts ts6.cache.qcloudcdn.com  --statType bandwidth
 
-##DescribeCdnHostInfo
+## DescribeCdnHostInfo
 python QcloudCdnTools_V2.py DescribeCdnHostInfo -u xxxxxxxxxxxx -p xxxxxxxxxxxx  --startDate 2016-05-08 --endDate 2016-05-09  --projects 0  --statType bandwidth  --debug
