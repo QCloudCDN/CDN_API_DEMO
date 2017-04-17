@@ -1,16 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "nodejs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-=======
   "name": "qcloud-cdn-node-sdk",
   "version": "1.0.0",
   "description": "腾讯云CDN OpenAPI Node.js SDK",
@@ -36,5 +24,4 @@
   ],
   "author": "QcloudCDN",
   "license": "MIT"
->>>>>>> 35ab9beb20e69594d7044a9a4dddf5a99d09ff68
 }
