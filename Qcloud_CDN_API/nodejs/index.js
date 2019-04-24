@@ -14,6 +14,7 @@ var METHOD = 'POST';
 var QcloudSDK = function() {
     this.secretKey = '';
     this.secretId = '';
+    this.token = '';
 }
 
 QcloudSDK.prototype.config = function(userConfig) {
@@ -21,18 +22,20 @@ QcloudSDK.prototype.config = function(userConfig) {
 
     this.secretKey = userConfig.secretKey;
     this.secretId = userConfig.secretId;
+    this.token = userConfig.token;
 }
 
 QcloudSDK.prototype.request = function(actionName, params, callback) {
     checkUserConfig({
         secretKey: this.secretKey,
-        secretId: this.secretId
+        secretId: this.secretId,
+        token: this.token,
     })
 
     params = params || {};
     var timestamp = Math.ceil((new Date()-0)/1000);
     var nonce = _.random(1000000);
-    var signature = createSignature(actionName, nonce, timestamp, params, this.secretKey, this.secretId);
+    var signature = createSignature(actionName, nonce, timestamp, params, this.secretKey, this.secretId, this.token);
 
     var requestData = _.assign({
         'Action': actionName,
@@ -40,6 +43,7 @@ QcloudSDK.prototype.request = function(actionName, params, callback) {
         'Nonce': nonce,
         'SecretId': this.secretId,
         'Signature': signature,
+        'Token': this.token
     }, params)
 
     requestData = commonUtils.serialize(requestData)
@@ -67,12 +71,13 @@ function checkUserConfig(userConfig) {
     }
 }
 
-function createSignature(actionName, nonce, timestamp, params, secretKey, secretId) {
+function createSignature(actionName, nonce, timestamp, params, secretKey, secretId, token) {
     var originObject = _.assign({
                             'Action': actionName,
                             'Nonce': nonce,
                             'SecretId': secretId,
-                            'Timestamp': timestamp
+                            'Timestamp': timestamp,
+                            'Token': token
                         }, params);
     var sortedObject = commonUtils.sortObject(originObject);
     var serializeString = commonUtils.serialize(sortedObject);
