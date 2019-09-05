@@ -40,6 +40,7 @@ func Signature(secretKey string, params map[string]interface{}, method string, r
 	params["Nonce"] = rd
 	/**sort all the params to make signPlainText**/
 	sigUrl := method + requesturl + "?"
+	sigParam := ""
 	var keys []string
 	for k := range params {
 		keys = append(keys, k)
@@ -49,6 +50,7 @@ func Signature(secretKey string, params map[string]interface{}, method string, r
 	for _, key := range keys {
 		if !isfirst {
 			sigUrl = sigUrl + "&"
+			sigParam = sigParam + "&"
 		}
 		isfirst = false
 		if strings.Contains(key, "_") {
@@ -56,12 +58,13 @@ func Signature(secretKey string, params map[string]interface{}, method string, r
 		}
 		value := typeSwitcher(params[key])
 		sigUrl = sigUrl + key + "=" + value
+		sigParam = sigParam + key + "=" + value
 	}
 	fmt.Println("signPlainText: ", sigUrl)
 	unencode_sign, _sign := sign(sigUrl, secretKey)
+	sigParam = "Signature=" + _sign + "&" + sigParam
 	params["Signature"] = unencode_sign
-	fmt.Println("unencoded signature: ", unencode_sign)
-	return _sign, params
+	return sigParam, params
 }
 
 /**
@@ -74,15 +77,20 @@ func Signature(secretKey string, params map[string]interface{}, method string, r
 	*@return       params       params of qcloud openapi interfac include Signature
 **/
 
-func SendRequest(requesturl string, params map[string]interface{}, method string) string {
+func SendRequest(requesturl string, params string, method string) string {
 	requesturl = "https://" + requesturl
 	var response string
 	if method == "GET" {
-		params_str := "?" + ParamsToStr(params)
+		params_str := "?" + params
 		requesturl = requesturl + params_str
 		response = httpGet(requesturl)
 	} else if method == "POST" {
-		response = httpPost(requesturl, params)
+		res, err := httpPost(requesturl, params)
+		if err != nil {
+			println(err.Error())
+			return err.Error()
+		}
+		response = string(res)
 	} else {
 		fmt.Println("unsuppported http method")
 		return "unsuppported http method"
@@ -101,23 +109,6 @@ func typeSwitcher(t interface{}) string {
 	default:
 		return ""
 	}
-}
-
-func ParamsToStr(params map[string]interface{}) string {
-	isfirst := true
-	requesturl := ""
-	for k, v := range params {
-		if !isfirst {
-			requesturl = requesturl + "&"
-		}
-		isfirst = false
-		if strings.Contains(k, "_") {
-			strings.Replace(k, ".", "_", -1)
-		}
-		v := typeSwitcher(v)
-		requesturl = requesturl + k + "=" + url.QueryEscape(v)
-	}
-	return requesturl
 }
 
 func sign(signPlainText string, secretKey string) (string, string) {
@@ -149,27 +140,24 @@ func httpGet(url string) string {
 	return string(body)
 }
 
-func httpPost(requesturl string, params map[string]interface{}) string {
-	req, err := http.NewRequest("POST", requesturl, strings.NewReader(ParamsToStr(params)))
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value")
-	/*
-		req, err := http.NewRequest("POST", requesturl, strings.NewReader(form.Encode()))
-		fmt.Println(strings.NewReader(form.Encode()))
-	*/
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := &http.Client{Transport: tr, Timeout: time.Duration(3) * time.Second}
-	resp, err := client.Do(req)
+func httpPost(requesturl string, params string) ([]byte, error) {
+	client := &http.Client{}
+
+	req, err := http.NewRequest("POST", requesturl, strings.NewReader(params))
 	if err != nil {
-		fmt.Println(err)
-		return err.Error()
+		return nil, err
 	}
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := client.Do(req)
+
 	defer resp.Body.Close()
-	body, erro := ioutil.ReadAll(resp.Body)
-	if erro != nil {
-		fmt.Println("http wrong erro")
-		return erro.Error()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
 	}
-	return string(body)
+	return body, nil
 }
+
