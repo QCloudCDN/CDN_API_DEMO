@@ -7,6 +7,7 @@
 * [php](https://github.com/QCloudCDN/CDN_API_SDK/tree/master/Qcloud_CDN_API/php)
 * [python](https://github.com/QCloudCDN/CDN_API_SDK/tree/master/Qcloud_CDN_API/python)
 * [java](https://github.com/QCloudCDN/CDN_API_SDK/tree/master/Qcloud_CDN_API/java/cdn_openapi_demo/src)
+* [lua](https://github.com/QCloudCDN/CDN_API_SDK/tree/master/Qcloud_CDN_API/lua)
 
 ## API 概览
 
